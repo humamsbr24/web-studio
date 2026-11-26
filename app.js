@@ -1,8 +1,8 @@
 'use strict';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const T={
-ar:{projects:'المشاريع',files:'الملفات',run:'تشغيل',code:'المحرر',console:'الطرفية',newProject:'مشروع جديد',import:'استيراد ZIP',theme:'الوضع الليلي / النهاري',close:'إغلاق',clear:'مسح',noFile:'افتح ملفاً من قائمة الملفات ☰',empty:'لا توجد مشاريع بعد',nFiles:'ملف',saved:'✓ تم الحفظ',saving:'…',newFile:'اسم الملف (مثال: js/app.js)',newFolder:'اسم المجلد',rename:'الاسم الجديد',confirm:'هل تريد الحذف؟',dupe:'موجود مسبقاً',noHtml:'لا يوجد ملف HTML للتشغيل',projName:'اسم المشروع',imported:'تم الاستيراد',badZip:'ملف ZIP غير صالح',binary:'ملف ثنائي (صورة/خط) — لا يمكن تحريره',lang:'English',openFirst:'افتح مشروعاً أولاً',save:'حفظ وتنزيل',dlFile:'تنزيل الملف الحالي',dlZip:'تنزيل المشروع كاملاً (ZIP)',tapDl:'اضغط للتنزيل:',copy:'نسخ الكود إلى الحافظة',copied:'تم النسخ',settings:'الإعدادات',renameL:'إعادة تسمية',del:'حذف',exp:'تصدير ZIP'},
-en:{projects:'Projects',files:'Files',run:'Run',code:'Editor',console:'Console',newProject:'New project',import:'Import ZIP',theme:'Dark / Light mode',close:'Close',clear:'Clear',noFile:'Open a file from the Files list ☰',empty:'No projects yet',nFiles:'files',saved:'✓ Saved',saving:'…',newFile:'File name (e.g. js/app.js)',newFolder:'Folder name',rename:'New name',confirm:'Delete this?',dupe:'Already exists',noHtml:'No HTML file to run',projName:'Project name',imported:'Imported',badZip:'Invalid ZIP file',binary:'Binary file (image/font) — not editable',lang:'العربية',openFirst:'Open a project first',save:'Save',dlFile:'Download current file',dlZip:'Download whole project (ZIP)',tapDl:'Tap to download:',copy:'Copy code to clipboard',copied:'Copied',settings:'Settings',renameL:'Rename',del:'Delete',exp:'Export ZIP'}};
+ar:{projects:'المشاريع',files:'الملفات',run:'تشغيل',code:'المحرر',console:'الطرفية',newProject:'مشروع جديد',import:'استيراد ZIP',theme:'الوضع الليلي / النهاري',close:'إغلاق',clear:'مسح',noFile:'افتح ملفاً من قائمة الملفات ☰',empty:'لا توجد مشاريع بعد',nFiles:'ملف',saved:'✓ تم الحفظ',saving:'…',newFile:'اسم الملف (مثال: js/app.js)',newFolder:'اسم المجلد',rename:'الاسم الجديد',confirm:'هل تريد الحذف؟',dupe:'موجود مسبقاً',noHtml:'لا يوجد ملف HTML للتشغيل',projName:'اسم المشروع',imported:'تم الاستيراد',badZip:'ملف ZIP غير صالح',binary:'ملف ثنائي (صورة/خط) — لا يمكن تحريره',lang:'English',openFirst:'افتح مشروعاً أولاً',save:'حفظ وتنزيل',dlFile:'تنزيل الملف الحالي',dlZip:'تنزيل المشروع كاملاً (ZIP)',tapDl:'اضغط للتنزيل:',copy:'نسخ الكود إلى الحافظة',copied:'تم النسخ',settings:'الإعدادات',renameL:'إعادة تسمية',del:'حذف',exp:'تصدير ZIP',saveFiles:'حفظ في الملفات'},
+en:{projects:'Projects',files:'Files',run:'Run',code:'Editor',console:'Console',newProject:'New project',import:'Import ZIP',theme:'Dark / Light mode',close:'Close',clear:'Clear',noFile:'Open a file from the Files list ☰',empty:'No projects yet',nFiles:'files',saved:'✓ Saved',saving:'…',newFile:'File name (e.g. js/app.js)',newFolder:'Folder name',rename:'New name',confirm:'Delete this?',dupe:'Already exists',noHtml:'No HTML file to run',projName:'Project name',imported:'Imported',badZip:'Invalid ZIP file',binary:'Binary file (image/font) — not editable',lang:'العربية',openFirst:'Open a project first',save:'Save',dlFile:'Download current file',dlZip:'Download whole project (ZIP)',tapDl:'Tap to download:',copy:'Copy code to clipboard',copied:'Copied',settings:'Settings',renameL:'Rename',del:'Delete',exp:'Export ZIP',saveFiles:'Save to Files'}};
 const S={lang:localStorage.wsLang||'ar',theme:localStorage.wsTheme||'dark',projects:[],cur:null,open:[],active:null,view:'projects',entry:null};
 const t=k=>T[S.lang][k]||k;
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -115,7 +115,7 @@ $('#bUp').onclick=()=>$('#fUp').click();
 $('#fUp').onchange=async e=>{for(const f of e.target.files)F()[f.name]=TXT.test(f.name)?await f.text():{b:await new Promise(r=>{const x=new FileReader;x.onload=()=>r(x.result);x.readAsDataURL(f)})};e.target.value='';tree();sched()};
 
 /* ---------- Preview ---------- */
-const HOOK=`<script>(()=>{const s=(t,a)=>parent.postMessage({ws:1,t,m:a.map(x=>{try{return typeof x==='string'?x:x instanceof Error?(x.stack||String(x)):(JSON.stringify(x)??String(x))}catch(e){return String(x)}}).join(' ')},'*');['log','info','warn','error','debug'].forEach(k=>{const o=console[k];console[k]=(...a)=>{s(k,a);o.apply(console,a)}});addEventListener('error',e=>s('error',[e.message+' (line '+e.lineno+')']));addEventListener('unhandledrejection',e=>s('error',['Unhandled: '+((e.reason&&e.reason.message)||e.reason)]));addEventListener('message',e=>{if(e.data&&e.data.ws==='eval'){try{s('log',[(0,eval)(e.data.c)])}catch(x){s('error',[x])}}})})()<\/script>`;
+const HOOK=`<script>(()=>{const s=(t,a)=>parent.postMessage({ws:1,t,m:a.map(x=>{try{return typeof x==='string'?x:x instanceof Error?(x.stack||String(x)):(JSON.stringify(x)??String(x))}catch(e){return String(x)}}).join(' ')},'*');['log','info','warn','error','debug'].forEach(k=>{const o=console[k];console[k]=(...a)=>{s(k,a);o.apply(console,a)}});addEventListener('error',e=>s('error',[e.message+' (line '+e.lineno+')']));addEventListener('unhandledrejection',e=>s('error',['Unhandled: '+((e.reason&&e.reason.message)||e.reason)]));addEventListener('message',e=>{if(e.data&&e.data.ws==='eval'){try{s('log',[(0,eval)(e.data.c)])}catch(x){s('error',[x])}}});const grab=a=>{const n=a.getAttribute('download')||'download';fetch(a.href).then(r=>r.blob()).then(b=>b.arrayBuffer().then(u=>parent.postMessage({ws:'dl',name:n,type:b.type,buf:u},'*',[u]))).catch(x=>s('error',['download: '+x]))};const dl=a=>a.hasAttribute('download')&&/^(blob|data):/.test(a.href);const oc=HTMLAnchorElement.prototype.click,od=HTMLAnchorElement.prototype.dispatchEvent;HTMLAnchorElement.prototype.click=function(){if(dl(this))grab(this);else oc.call(this)};HTMLAnchorElement.prototype.dispatchEvent=function(ev){if(ev&&ev.type==='click'&&dl(this)){grab(this);return true}return od.call(this,ev)};addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[download]');if(a&&dl(a)){e.preventDefault();grab(a)}},true)})()<\/script>`;
 const res=(base,ref)=>{if(/^(\w+:|\/\/|#)/.test(ref))return null;try{return decodeURIComponent(new URL(ref,'http://x/'+base).pathname.slice(1))}catch(e){return null}};
 const durl=(f,p)=>{const v=f[p];return v==null?null:typeof v==='object'?v.b:'data:'+mime(p)+';charset=utf-8,'+encodeURIComponent(v)};
 function build(entry){const f=F();
@@ -130,11 +130,11 @@ let frame=null,con=[];
 function run(){if(!needP())return;saveNow();const f=F(),isH=p=>p&&/\.html?$/i.test(p)&&typeof f[p]==='string';
   const e=isH(S.active)?S.active:isH('index.html')?'index.html':Object.keys(f).find(isH);if(!e)return toast(t('noHtml'));
   S.entry=e;go('preview');con=[];drawCon();$('#addr').textContent='studio://'+S.cur.name+'/'+e;
-  $('#fw').innerHTML='';frame=document.createElement('iframe');frame.sandbox='allow-scripts allow-modals allow-forms allow-popups';frame.srcdoc=build(e);$('#fw').append(frame)}
+  $('#fw').innerHTML='';frame=document.createElement('iframe');frame.sandbox='allow-scripts allow-modals allow-forms allow-popups allow-downloads';frame.srcdoc=build(e);$('#fw').append(frame)}
 $('#bReload').onclick=run;
 function drawCon(){const c=$('#cl');c.innerHTML=con.map(x=>`<div class="${x.t==='in'?'in':x.t}">${esc(x.m)}</div>`).join('');c.scrollTop=c.scrollHeight;
   const n=con.filter(x=>x.t==='error').length,b=$('#badge');b.hidden=!n;b.textContent=n}
-addEventListener('message',e=>{const d=e.data;if(!d||!d.ws||!frame||e.source!==frame.contentWindow)return;con.push(d);if(con.length>500)con.shift();drawCon();if(d.t==='error')$('#con').hidden=false});
+addEventListener('message',e=>{const d=e.data;if(!d||!d.ws||!frame||e.source!==frame.contentWindow)return;if(d.ws==='dl'){saveBlob(new Blob([d.buf],{type:d.type||mime(d.name)}),safeName(d.name));return}con.push(d);if(con.length>500)con.shift();drawCon();if(d.t==='error')$('#con').hidden=false});
 $('#ce').onkeydown=e=>{if(e.key!=='Enter'||!e.target.value||!frame)return;con.push({t:'in',m:'› '+e.target.value});frame.contentWindow.postMessage({ws:'eval',c:e.target.value},'*');e.target.value='';drawCon()};
 $('#bClr').onclick=()=>{con=[];drawCon()};
 
@@ -159,10 +159,12 @@ async function zipRead(buf){const u=new Uint8Array(buf),v=new DataView(buf),dc=n
   return out}
 const safeName=n=>(n||'project').replace(/[\\/:*?"<>|]/g,'-').trim()||'project';
 async function saveBlob(blob,name,text){
-  const file=new File([blob],name,{type:blob.type||'application/octet-stream'});
-  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file]});return}}catch(e){if(e.name==='AbortError')return}
+  const file=new File([blob],name,{type:blob.type||'application/octet-stream'}),can=!!(navigator.canShare&&navigator.canShare({files:[file]}));
+  if(can){try{await navigator.share({files:[file]});return}catch(e){if(e.name==='AbortError')return}}
   const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.className='dllink';a.textContent=t('tapDl')+' '+name;
-  const it=text!=null&&navigator.clipboard?[{ic:'copy',l:t('copy'),keep:1,f:()=>navigator.clipboard.writeText(text).then(()=>toast(t('copied')))}]:[];
+  const it=[];
+  if(can)it.push({ic:'download',l:t('saveFiles')+': '+name,f:()=>navigator.share({files:[file]}).catch(()=>{})});
+  if(text!=null&&navigator.clipboard)it.push({ic:'copy',l:t('copy'),keep:1,f:()=>navigator.clipboard.writeText(text).then(()=>toast(t('copied')))});
   sheet(t('save'),it,a);setTimeout(()=>URL.revokeObjectURL(url),180000)}
 const exportProj=p=>saveBlob(zipBuild(p.files),safeName(p.name)+'.zip');
 function exportFile(p){const v=F()[p],tx=typeof v==='string';saveBlob(new Blob([tx?v:b64d(v.b)],{type:mime(p)}),p.split('/').pop(),tx?v:null)}
