@@ -1,0 +1,35 @@
+# Web Studio
+
+بيئة تطوير ويب (IDE) تعمل على iPhone كتطبيق PWA مستقل: حرّر وشغّل مشاريع HTML/CSS/JS بدون App Store.
+
+## المميزات
+- محرر أكواد مع تلوين (HTML / CSS / JS) وإزاحة تلقائية وشريط رموز سريع للآيفون
+- مشاريع متعددة، ملفات ومجلدات (إنشاء، إعادة تسمية، حذف، رفع صور/ملفات)
+- معاينة حية داخل نافذة شبيهة بالمتصفح + طرفية Console تعرض `console.*` وأخطاء JS ويمكنك تنفيذ JS فيها
+- حفظ تلقائي في IndexedDB
+- استيراد / تصدير ZIP (بدون مكتبات خارجية)
+- وضع ليلي/نهاري، عربي/إنجليزي، عمل دون إنترنت بعد أول تحميل
+
+## النشر على GitHub Pages
+1. أنشئ مستودعاً جديداً على GitHub (مثلاً `web-studio`، عام Public).
+2. ارفع **محتويات** هذا المجلد (وليس المجلد نفسه) إلى جذر المستودع: `index.html`, `style.css`, `app.js`, `manifest.json`, `service-worker.js`, `icons/`, `README.md`, `.gitignore`.
+   - من سطر الأوامر:
+     ```bash
+     git init && git add . && git commit -m "Web Studio"
+     git branch -M main
+     git remote add origin https://github.com/USERNAME/web-studio.git
+     git push -u origin main
+     ```
+3. من المستودع: **Settings → Pages → Build and deployment**: Source = *Deploy from a branch*، Branch = `main` و Folder = `/ (root)` ثم Save.
+4. بعد دقيقة أو اثنتين يظهر الرابط: `https://USERNAME.github.io/web-studio/` (يعمل عبر HTTPS تلقائياً).
+
+## التثبيت على iPhone
+1. افتح الرابط في **Safari** (يجب Safari وليس Chrome).
+2. اضغط زر المشاركة ⬆ ثم **إضافة إلى الشاشة الرئيسية** (Add to Home Screen) ثم **إضافة**.
+3. افتح التطبيق من الأيقونة: سيعمل بملء الشاشة كتطبيق مستقل.
+
+## ملاحظات
+- المعاينة تعمل داخل iframe معزول (sandbox)، لذلك `localStorage` و`import` النسبي بين ملفات JS (ES modules) لا يعملان داخل المعاينة. استخدم وسوم `<script src>` و`<link>` العادية؛ تُدمج ملفاتها تلقائياً.
+- المكتبات الخارجية عبر CDN تعمل عند توفر الإنترنت.
+- لتحديث التطبيق بعد تعديل الملفات غيّر رقم `V` في `service-worker.js` (مثلاً `web-studio-v2`).
+- البيانات تُخزَّن محلياً على الجهاز؛ صدّر ZIP بشكل دوري كنسخة احتياطية (Safari قد يمسح بيانات المواقع غير المستخدمة لفترة طويلة).

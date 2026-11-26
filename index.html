@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>Web Studio</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d1117">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Web Studio">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><b id="title">Web Studio</b><span id="st"></span><button id="bSet">⚙</button></header>
+<main>
+  <section id="v-projects" class="v on">
+    <div class="bar"><button class="pri" id="bNew" data-i="newProject"></button><button id="bImp" data-i="import"></button><input type="file" id="fImp" accept=".zip,application/zip" hidden></div>
+    <div id="plist"></div>
+  </section>
+  <section id="v-editor" class="v">
+    <div id="tabs"></div>
+    <div class="ed"><pre id="hl"></pre><textarea id="ta" wrap="off" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off"></textarea><div id="empty" data-i="noFile"></div></div>
+    <div id="keys"></div>
+  </section>
+  <section id="v-preview" class="v">
+    <div class="addr"><button id="bReload">↻</button><span id="addr"></span></div>
+    <div id="fw"></div>
+    <div id="con" hidden><div id="cl"></div><div class="ci"><input id="ce" placeholder="JS ›" autocapitalize="off" autocorrect="off" spellcheck="false"><button id="bClr" data-i="clear"></button></div></div>
+  </section>
+  <div id="scrim"></div>
+  <aside id="drawer"><div class="dh"><b data-i="files"></b><span><button id="bAF">＋ 📄</button><button id="bAD">＋ 📁</button><button id="bUp">⬆</button></span></div><div id="tree"></div><input type="file" id="fUp" hidden multiple></aside>
+</main>
+<nav>
+  <button data-n="projects"><i>▦</i><span data-i="projects"></span></button>
+  <button data-n="files"><i>☰</i><span data-i="files"></span></button>
+  <button data-n="run" id="nRun"><i>▶</i><span data-i="run"></span></button>
+  <button data-n="code"><i>‹›</i><span data-i="code"></span></button>
+  <button data-n="console"><i>&gt;_</i><span data-i="console"></span><em id="badge" hidden></em></button>
+</nav>
+<div id="sheet" hidden><div class="panel"><button id="bTheme" data-i="theme"></button><button id="bLang"></button><button id="bClose" class="pri" data-i="close"></button></div></div>
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
