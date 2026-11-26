@@ -1,8 +1,8 @@
 'use strict';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const T={
-ar:{projects:'المشاريع',files:'الملفات',run:'تشغيل',code:'المحرر',console:'الطرفية',newProject:'＋ مشروع جديد',import:'استيراد ZIP',theme:'الوضع الليلي / النهاري',close:'إغلاق',clear:'مسح',noFile:'افتح ملفاً من قائمة الملفات ☰',empty:'لا توجد مشاريع بعد',nFiles:'ملف',saved:'✓ تم الحفظ',saving:'…',newFile:'اسم الملف (مثال: js/app.js)',newFolder:'اسم المجلد',rename:'الاسم الجديد',confirm:'هل تريد الحذف؟',dupe:'موجود مسبقاً',noHtml:'لا يوجد ملف HTML للتشغيل',projName:'اسم المشروع',imported:'تم الاستيراد',badZip:'ملف ZIP غير صالح',binary:'ملف ثنائي (صورة/خط) — لا يمكن تحريره',lang:'English',openFirst:'افتح مشروعاً أولاً'},
-en:{projects:'Projects',files:'Files',run:'Run',code:'Editor',console:'Console',newProject:'＋ New project',import:'Import ZIP',theme:'Dark / Light mode',close:'Close',clear:'Clear',noFile:'Open a file from the Files list ☰',empty:'No projects yet',nFiles:'files',saved:'✓ Saved',saving:'…',newFile:'File name (e.g. js/app.js)',newFolder:'Folder name',rename:'New name',confirm:'Delete this?',dupe:'Already exists',noHtml:'No HTML file to run',projName:'Project name',imported:'Imported',badZip:'Invalid ZIP file',binary:'Binary file (image/font) — not editable',lang:'العربية',openFirst:'Open a project first'}};
+ar:{projects:'المشاريع',files:'الملفات',run:'تشغيل',code:'المحرر',console:'الطرفية',newProject:'مشروع جديد',import:'استيراد ZIP',theme:'الوضع الليلي / النهاري',close:'إغلاق',clear:'مسح',noFile:'افتح ملفاً من قائمة الملفات ☰',empty:'لا توجد مشاريع بعد',nFiles:'ملف',saved:'✓ تم الحفظ',saving:'…',newFile:'اسم الملف (مثال: js/app.js)',newFolder:'اسم المجلد',rename:'الاسم الجديد',confirm:'هل تريد الحذف؟',dupe:'موجود مسبقاً',noHtml:'لا يوجد ملف HTML للتشغيل',projName:'اسم المشروع',imported:'تم الاستيراد',badZip:'ملف ZIP غير صالح',binary:'ملف ثنائي (صورة/خط) — لا يمكن تحريره',lang:'English',openFirst:'افتح مشروعاً أولاً',save:'حفظ وتنزيل',dlFile:'تنزيل الملف الحالي',dlZip:'تنزيل المشروع كاملاً (ZIP)',tapDl:'اضغط للتنزيل:',copy:'نسخ الكود إلى الحافظة',copied:'تم النسخ',settings:'الإعدادات',renameL:'إعادة تسمية',del:'حذف',exp:'تصدير ZIP'},
+en:{projects:'Projects',files:'Files',run:'Run',code:'Editor',console:'Console',newProject:'New project',import:'Import ZIP',theme:'Dark / Light mode',close:'Close',clear:'Clear',noFile:'Open a file from the Files list ☰',empty:'No projects yet',nFiles:'files',saved:'✓ Saved',saving:'…',newFile:'File name (e.g. js/app.js)',newFolder:'Folder name',rename:'New name',confirm:'Delete this?',dupe:'Already exists',noHtml:'No HTML file to run',projName:'Project name',imported:'Imported',badZip:'Invalid ZIP file',binary:'Binary file (image/font) — not editable',lang:'العربية',openFirst:'Open a project first',save:'Save',dlFile:'Download current file',dlZip:'Download whole project (ZIP)',tapDl:'Tap to download:',copy:'Copy code to clipboard',copied:'Copied',settings:'Settings',renameL:'Rename',del:'Delete',exp:'Export ZIP'}};
 const S={lang:localStorage.wsLang||'ar',theme:localStorage.wsTheme||'dark',projects:[],cur:null,open:[],active:null,view:'projects',entry:null};
 const t=k=>T[S.lang][k]||k;
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -10,6 +10,11 @@ const escA=s=>esc(s).replace(/"/g,'&quot;');
 const uid=()=>crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random());
 let toastT;const toast=m=>{const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),2200)};
 
+const IC={plus:'M12 5v14M5 12h14',play:'M7 4.5v15l12-7.5z',folder:'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z',file:'M6 3h8l4 4v14H6zM14 3v4h4',trash:'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13',edit:'M4 20h4L19 9l-4-4L4 16zM13 7l4 4',download:'M12 4v11M7 11l5 5 5-5M5 20h14',upload:'M12 16V5M7 9l5-5 5 5M5 20h14',grid:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',list:'M4 6h16M4 12h16M4 18h10',code:'M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16',term:'M4 5h16v14H4zM8 10l3 2-3 2M13 15h4',gear:'M4 7h10M18 7h2M4 17h2M10 17h10M14 5v4M6 15v4',undo:'M9 5L4 10l5 5M4 10h9a5 5 0 0 1 0 10h-2',redo:'M15 5l5 5-5 5M20 10h-9a5 5 0 0 0 0 10h2',refresh:'M20 12a8 8 0 1 1-2.5-5.8M20 4v5h-5',dots:'M5 12h.01M12 12h.01M19 12h.01',copy:'M9 9h11v11H9zM5 15V4h11'};
+const svg=n=>`<svg viewBox="0 0 24 24" fill="${n==='play'?'currentColor':'none'}" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="${IC[n]}"/></svg>`;
+const icons=()=>$$('[data-ic]').forEach(e=>e.innerHTML=svg(e.dataset.ic));
+function sheet(title,items,extra){const p=$('#panel');p.innerHTML=`<h3>${esc(title)}</h3>`;items.forEach(i=>{const b=document.createElement('button');b.innerHTML=(i.ic?svg(i.ic):'')+`<span>${esc(i.l)}</span>`;b.onclick=()=>{if(!i.keep)$('#sheet').hidden=true;i.f&&i.f()};p.append(b)});if(extra)p.append(extra);const c=document.createElement('button');c.className='cancel';c.textContent=t('close');c.onclick=()=>$('#sheet').hidden=true;p.append(c);$('#sheet').hidden=false}
+$('#sheet').onclick=e=>{if(e.target.id==='sheet')e.target.hidden=true};
 /* ---------- IndexedDB ---------- */
 const idb=new Promise((ok,no)=>{const r=indexedDB.open('webstudio',1);r.onupgradeneeded=()=>r.result.createObjectStore('p',{keyPath:'id'});r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)});
 const tx=async(m,f)=>{const d=await idb;return new Promise((ok,no)=>{const x=d.transaction('p',m),q=f(x.objectStore('p'));x.oncomplete=()=>ok(q&&q.result);x.onerror=()=>no(x.error)})};
@@ -60,12 +65,10 @@ $('#scrim').onclick=()=>document.body.classList.remove('dr');
 
 /* ---------- Projects ---------- */
 function renderProjects(){const l=[...S.projects].sort((a,b)=>b.updated-a.updated);
-  $('#plist').innerHTML=l.length?l.map(p=>`<div class="card" data-id="${p.id}"><div class="m" data-a="open"><b>${esc(p.name)}</b><small>${Object.keys(p.files).length} ${t('nFiles')} · ${new Date(p.updated).toLocaleDateString(S.lang)}</small></div><button data-a="exp">⬇</button><button data-a="rn">✎</button><button data-a="rm">🗑</button></div>`).join(''):`<div class="none">${t('empty')}</div>`}
-$('#plist').onclick=async e=>{const c=e.target.closest('.card'),b=e.target.closest('[data-a]');if(!c||!b)return;const p=S.projects.find(x=>x.id===c.dataset.id),a=b.dataset.a;
+  $('#plist').innerHTML=l.length?l.map(p=>`<div class="card" data-id="${p.id}"><div class="ico">${svg('code')}</div><div class="m" data-a="open"><b>${esc(p.name)}</b><small>${Object.keys(p.files).filter(k=>!k.endsWith('/.keep')).length} ${t('nFiles')} · ${new Date(p.updated).toLocaleDateString(S.lang)}</small></div><button class="ib" data-a="more">${svg('dots')}</button></div>`).join(''):`<div class="none">${t('empty')}</div>`}
+$('#plist').onclick=e=>{const c=e.target.closest('.card'),b=e.target.closest('[data-a]');if(!c||!b)return;const p=S.projects.find(x=>x.id===c.dataset.id),a=b.dataset.a;
   if(a==='open')openProject(p);
-  else if(a==='exp')exportProj(p);
-  else if(a==='rn'){const n=(prompt(t('projName'),p.name)||'').trim();if(n){p.name=n;await dbPut(p);renderProjects()}}
-  else if(a==='rm'&&confirm(t('confirm'))){await dbDel(p.id);S.projects=S.projects.filter(x=>x!==p);if(S.cur===p)S.cur=null;renderProjects()}};
+  else if(a==='more')sheet(p.name,[{ic:'download',l:t('exp'),f:()=>exportProj(p)},{ic:'edit',l:t('renameL'),f:async()=>{const n=(prompt(t('projName'),p.name)||'').trim();if(n){p.name=n;await dbPut(p);renderProjects()}}},{ic:'trash',l:t('del'),f:async()=>{if(!confirm(t('confirm')))return;await dbDel(p.id);S.projects=S.projects.filter(x=>x!==p);if(S.cur===p)S.cur=null;renderProjects()}}])};
 $('#bNew').onclick=async()=>{const n=(prompt(t('projName'),'Project '+(S.projects.length+1))||'').trim();if(!n)return;const p=newP(n);await dbPut(p);S.projects.push(p);openProject(p)};
 function openProject(p){S.cur=p;S.open=[];S.active=null;const f=Object.keys(p.files).filter(k=>typeof p.files[k]==='string'&&!k.endsWith('/.keep'));
   const first=p.files['index.html']!=null?'index.html':f[0];first?openFile(first):(tabs(),tree(),load(),go('editor'))}
@@ -73,10 +76,11 @@ function openProject(p){S.cur=p;S.open=[];S.active=null;const f=Object.keys(p.fi
 /* ---------- Editor ---------- */
 const ta=$('#ta'),pre=$('#hl');
 function load(){const v=S.cur&&S.active&&F()[S.active],ed=$('.ed');
-  if(v==null||v===false||typeof v==='object'){ta.value='';ta.disabled=true;pre.innerHTML='';ed.classList.remove('has');$('#empty').textContent=typeof v==='object'?t('binary'):t('noFile');return}
+  if(v==null||v===false||typeof v==='object'){ta.value='';ta.disabled=true;pre.innerHTML='';ln.textContent='';ln.dataset.n='';ed.classList.remove('has');$('#empty').textContent=typeof v==='object'?t('binary'):t('noFile');return}
   ta.disabled=false;ta.value=v;ed.classList.add('has');draw();ta.scrollTop=ta.scrollLeft=0;sync()}
-const draw=()=>{pre.innerHTML=hl(ta.value,LX[ext(S.active)])};
-const sync=()=>{pre.scrollTop=ta.scrollTop;pre.scrollLeft=ta.scrollLeft};
+const ln=$('#ln');
+const draw=()=>{pre.innerHTML=hl(ta.value,LX[ext(S.active)]);const n=ta.value.split('\n').length;if(ln.dataset.n!=n){ln.dataset.n=n;ln.textContent=Array.from({length:n},(_,i)=>i+1).join('\n')}};
+const sync=()=>{pre.scrollTop=ta.scrollTop;pre.scrollLeft=ta.scrollLeft;ln.scrollTop=ta.scrollTop};
 ta.addEventListener('scroll',sync);
 ta.addEventListener('input',()=>{if(!S.active)return;F()[S.active]=ta.value;draw();sync();sched()});
 function ins(txt,back){ta.focus();if(!document.execCommand('insertText',false,txt)){ta.setRangeText(txt,ta.selectionStart,ta.selectionEnd,'end');ta.dispatchEvent(new Event('input'))}if(back)ta.selectionStart=ta.selectionEnd=ta.selectionEnd-back}
@@ -96,7 +100,7 @@ function tree(){const f=F(),ks=Object.keys(f),dirs=new Set();
   ks.forEach(k=>{const a=k.split('/');for(let i=1;i<a.length;i++)dirs.add(a.slice(0,i).join('/'))});
   const it=[...dirs].map(p=>({p,d:1})).concat(ks.filter(k=>!k.endsWith('/.keep')).map(p=>({p})));
   const key=x=>x.p.replace(/\//g,'\0');it.sort((a,b)=>key(a)<key(b)?-1:1);
-  $('#tree').innerHTML=it.map(({p,d})=>{const a=p.split('/');return`<div class="ti${p===S.active?' on':''}" style="padding-inline-start:${12+(a.length-1)*16}px" data-p="${escA(p)}" data-d="${d?1:''}"><span class="tn">${d?'📁':'📄'} ${esc(a.pop())}</span><span><button data-a="ren">✎</button><button data-a="del">🗑</button></span></div>`}).join('')}
+  $('#tree').innerHTML=it.map(({p,d})=>{const a=p.split('/');return`<div class="ti${p===S.active?' on':''}" style="padding-inline-start:${12+(a.length-1)*16}px" data-p="${escA(p)}" data-d="${d?1:''}"><span class="tn">${svg(d?'folder':'file')}${esc(a.pop())}</span><span><button class="ib" data-a="ren">${svg('edit')}</button><button class="ib" data-a="del">${svg('trash')}</button></span></div>`}).join('')}
 $('#tree').onclick=e=>{const r=e.target.closest('.ti');if(!r)return;const p=r.dataset.p,d=!!r.dataset.d,a=e.target.closest('[data-a]');
   if(a)return a.dataset.a==='ren'?rename(p,d):remove(p,d);
   if(!d)openFile(p)};
@@ -153,20 +157,34 @@ async function zipRead(buf){const u=new Uint8Array(buf),v=new DataView(buf),dc=n
     if(x.m===8)d=new Uint8Array(await new Response(new Blob([d]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer());else if(x.m!==0)continue;
     out[n]=TXT.test(n)?dc.decode(d):{b:'data:'+mime(n)+';base64,'+b64e(d)}}
   return out}
-function exportProj(p){const blob=zipBuild(p.files),file=new File([blob],p.name+'.zip',{type:'application/zip'});
-  const dl=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=file.name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
-  if(navigator.canShare&&navigator.canShare({files:[file]}))navigator.share({files:[file]}).catch(e=>{if(e.name!=='AbortError')dl()});else dl()}
+const safeName=n=>(n||'project').replace(/[\\/:*?"<>|]/g,'-').trim()||'project';
+async function saveBlob(blob,name,text){
+  const file=new File([blob],name,{type:blob.type||'application/octet-stream'});
+  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file]});return}}catch(e){if(e.name==='AbortError')return}
+  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.className='dllink';a.textContent=t('tapDl')+' '+name;
+  const it=text!=null&&navigator.clipboard?[{ic:'copy',l:t('copy'),keep:1,f:()=>navigator.clipboard.writeText(text).then(()=>toast(t('copied')))}]:[];
+  sheet(t('save'),it,a);setTimeout(()=>URL.revokeObjectURL(url),180000)}
+const exportProj=p=>saveBlob(zipBuild(p.files),safeName(p.name)+'.zip');
+function exportFile(p){const v=F()[p],tx=typeof v==='string';saveBlob(new Blob([tx?v:b64d(v.b)],{type:mime(p)}),p.split('/').pop(),tx?v:null)}
+function dlSheet(){if(!needP())return;saveNow();const it=[];if(S.active&&F()[S.active]!=null)it.push({ic:'file',l:t('dlFile')+': '+S.active.split('/').pop(),f:()=>exportFile(S.active)});it.push({ic:'download',l:t('dlZip'),f:()=>exportProj(S.cur)});sheet(t('save'),it)}
 $('#bImp').onclick=()=>$('#fImp').click();
 $('#fImp').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
   try{const files=await zipRead(await f.arrayBuffer());if(!Object.keys(files).length)throw 0;const p={id:uid(),name:f.name.replace(/\.zip$/i,''),files,updated:Date.now()};await dbPut(p);S.projects.push(p);renderProjects();toast(t('imported'))}catch(x){toast(t('badZip'))}};
 
 /* ---------- Settings / i18n ---------- */
-function applyLang(){document.documentElement.lang=S.lang;document.documentElement.dir=S.lang==='ar'?'rtl':'ltr';$$('[data-i]').forEach(e=>e.textContent=t(e.dataset.i));$('#bLang').textContent=t('lang');localStorage.wsLang=S.lang;renderProjects()}
+function applyLang(){document.documentElement.lang=S.lang;document.documentElement.dir=S.lang==='ar'?'rtl':'ltr';$$('[data-i]').forEach(e=>e.textContent=t(e.dataset.i));localStorage.wsLang=S.lang;renderProjects()}
 function applyTheme(){document.documentElement.dataset.theme=S.theme;localStorage.wsTheme=S.theme;$('meta[name=theme-color]').content=S.theme==='dark'?'#0d1117':'#f6f8fa'}
-$('#bSet').onclick=()=>$('#sheet').hidden=false;$('#bClose').onclick=()=>$('#sheet').hidden=true;
-$('#bTheme').onclick=()=>{S.theme=S.theme==='dark'?'light':'dark';applyTheme()};
-$('#bLang').onclick=()=>{S.lang=S.lang==='ar'?'en':'ar';applyLang();go(S.view)};
-
+$('#bSet').onclick=()=>sheet(t('settings'),[{ic:'gear',l:t('theme'),f:()=>{S.theme=S.theme==='dark'?'light':'dark';applyTheme()}},{ic:'list',l:t('lang'),f:()=>{S.lang=S.lang==='ar'?'en':'ar';applyLang();go(S.view)}}]);
+/* ---------- Toolbar / iPhone viewport ---------- */
+const setFs=n=>{S.fs=Math.max(11,Math.min(22,n));localStorage.wsFs=S.fs;const e=$('.ed');e.style.setProperty('--fs',S.fs+'px');e.style.setProperty('--lh',Math.round(S.fs*1.6)+'px')};
+setFs(+localStorage.wsFs||14);
+$('#bFm').onclick=()=>setFs(S.fs-1);$('#bFp').onclick=()=>setFs(S.fs+1);
+$('#bUndo').onclick=()=>{ta.focus();document.execCommand('undo')};$('#bRedo').onclick=()=>{ta.focus();document.execCommand('redo')};
+$('#bSave').onclick=dlSheet;$('#bBack').onclick=()=>go('editor');
+const vv=window.visualViewport;
+function fit(){const h=vv?vv.height:innerHeight;document.documentElement.style.setProperty('--vh',h+'px');document.body.classList.toggle('kb',vv?innerHeight-vv.height>120:false);scrollTo(0,0)}
+if(vv){vv.addEventListener('resize',fit);vv.addEventListener('scroll',()=>scrollTo(0,0))}
+addEventListener('orientationchange',()=>setTimeout(fit,300));fit();
 /* ---------- Init ---------- */
-(async()=>{S.projects=await dbAll();if(!S.projects.length){const p=newP('My First Project');await dbPut(p);S.projects.push(p)}applyLang();applyTheme();go('projects')})();
-if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js').catch(()=>{}));
+(async()=>{S.projects=await dbAll();if(!S.projects.length){const p=newP('My First Project');await dbPut(p);S.projects.push(p)}icons();applyLang();applyTheme();go('projects')})();
+if('serviceWorker' in navigator){const had=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had)saveNow().finally(()=>location.reload())});addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js').catch(()=>{}))}

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <title>Web Studio</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0d1117">
+<meta name="theme-color" content="#111823">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -15,33 +15,35 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header><b id="title">Web Studio</b><span id="st"></span><button id="bSet">⚙</button></header>
+<header><div class="hd"><b id="title">Web Studio</b><span id="st"></span></div><button class="ib" id="bSet" data-ic="gear"></button></header>
 <main>
   <section id="v-projects" class="v on">
-    <div class="bar"><button class="pri" id="bNew" data-i="newProject"></button><button id="bImp" data-i="import"></button><input type="file" id="fImp" accept=".zip,application/zip" hidden></div>
+    <h1 class="hero" data-i="projects"></h1>
+    <div class="bar"><button class="pri" id="bNew"><span data-ic="plus"></span><span data-i="newProject"></span></button><button id="bImp"><span data-ic="upload"></span><span data-i="import"></span></button><input type="file" id="fImp" accept=".zip,application/zip" hidden></div>
     <div id="plist"></div>
   </section>
   <section id="v-editor" class="v">
     <div id="tabs"></div>
-    <div class="ed"><pre id="hl"></pre><textarea id="ta" wrap="off" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off"></textarea><div id="empty" data-i="noFile"></div></div>
+    <div id="etb"><button class="ib" id="bUndo" data-ic="undo"></button><button class="ib" id="bRedo" data-ic="redo"></button><span class="sp"></span><button class="ib" id="bFm">A−</button><button class="ib" id="bFp">A+</button><button class="pri sm" id="bSave"><span data-ic="download"></span><span data-i="save"></span></button></div>
+    <div class="ed"><pre id="ln"></pre><div class="cw"><pre id="hl"></pre><textarea id="ta" wrap="off" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off"></textarea></div><div id="empty" data-i="noFile"></div></div>
     <div id="keys"></div>
   </section>
   <section id="v-preview" class="v">
-    <div class="addr"><button id="bReload">↻</button><span id="addr"></span></div>
+    <div class="addr"><button class="ib" id="bBack" data-ic="code"></button><span id="addr"></span><button class="ib" id="bReload" data-ic="refresh"></button></div>
     <div id="fw"></div>
     <div id="con" hidden><div id="cl"></div><div class="ci"><input id="ce" placeholder="JS ›" autocapitalize="off" autocorrect="off" spellcheck="false"><button id="bClr" data-i="clear"></button></div></div>
   </section>
   <div id="scrim"></div>
-  <aside id="drawer"><div class="dh"><b data-i="files"></b><span><button id="bAF">＋ 📄</button><button id="bAD">＋ 📁</button><button id="bUp">⬆</button></span></div><div id="tree"></div><input type="file" id="fUp" hidden multiple></aside>
+  <aside id="drawer"><div class="dh"><b data-i="files"></b><span><button class="ib" id="bAF"><span data-ic="plus"></span><span data-ic="file"></span></button><button class="ib" id="bAD"><span data-ic="plus"></span><span data-ic="folder"></span></button><button class="ib" id="bUp" data-ic="upload"></button></span></div><div id="tree"></div><input type="file" id="fUp" hidden multiple></aside>
 </main>
 <nav>
-  <button data-n="projects"><i>▦</i><span data-i="projects"></span></button>
-  <button data-n="files"><i>☰</i><span data-i="files"></span></button>
-  <button data-n="run" id="nRun"><i>▶</i><span data-i="run"></span></button>
-  <button data-n="code"><i>‹›</i><span data-i="code"></span></button>
-  <button data-n="console"><i>&gt;_</i><span data-i="console"></span><em id="badge" hidden></em></button>
+  <button data-n="projects"><span class="ni" data-ic="grid"></span><span data-i="projects"></span></button>
+  <button data-n="files"><span class="ni" data-ic="list"></span><span data-i="files"></span></button>
+  <button data-n="run" id="nRun"><span class="ni" data-ic="play"></span><span data-i="run"></span></button>
+  <button data-n="code"><span class="ni" data-ic="code"></span><span data-i="code"></span></button>
+  <button data-n="console"><span class="ni" data-ic="term"></span><span data-i="console"></span><em id="badge" hidden></em></button>
 </nav>
-<div id="sheet" hidden><div class="panel"><button id="bTheme" data-i="theme"></button><button id="bLang"></button><button id="bClose" class="pri" data-i="close"></button></div></div>
+<div id="sheet" hidden><div class="panel" id="panel"></div></div>
 <div id="toast"></div>
 <script src="app.js"></script>
 </body>
