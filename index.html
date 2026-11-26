@@ -15,10 +15,11 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header><div class="hd"><b id="title">Web Studio</b><span id="st"></span></div><button class="ib" id="bSet" data-ic="gear"></button></header>
+<header><img class="brand" src="icons/mark.png" alt=""><div class="hd"><b id="title">Web Studio</b><span id="st"></span></div><button class="ib" id="bSet" data-ic="gear"></button></header>
 <main>
   <section id="v-projects" class="v on">
-    <h1 class="hero" data-i="projects"></h1>
+    <div class="hcard"><img src="icons/logo.png" alt="HUMAM IT"><div><b>Web Studio</b><small data-i="tag"></small></div></div>
+    <h2 class="sec" data-i="projects"></h2>
     <div class="bar"><button class="pri" id="bNew"><span data-ic="plus"></span><span data-i="newProject"></span></button><button id="bImp"><span data-ic="upload"></span><span data-i="import"></span></button><input type="file" id="fImp" accept=".zip,application/zip" hidden></div>
     <div id="plist"></div>
   </section>
@@ -29,7 +30,7 @@
     <div id="keys"></div>
   </section>
   <section id="v-preview" class="v">
-    <div class="addr"><button class="ib" id="bBack" data-ic="code"></button><span id="addr"></span><button class="ib" id="bReload" data-ic="refresh"></button></div>
+    <div class="addr"><button class="ib" id="bBack" data-ic="code"></button><span id="addr"></span><button class="ib" id="bFit" data-ic="monitor"></button><button class="ib" id="bReload" data-ic="refresh"></button></div>
     <div id="fw"></div>
     <div id="con" hidden><div id="cl"></div><div class="ci"><input id="ce" placeholder="JS ›" autocapitalize="off" autocorrect="off" spellcheck="false"><button id="bClr" data-i="clear"></button></div></div>
   </section>
@@ -45,6 +46,7 @@
 </nav>
 <div id="sheet" hidden><div class="panel" id="panel"></div></div>
 <div id="toast"></div>
+<div id="splash"><img src="icons/logo.png" alt="HUMAM IT"><b>Web Studio</b></div>
 <script src="app.js"></script>
 </body>
 </html>
