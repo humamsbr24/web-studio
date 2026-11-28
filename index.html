@@ -2,49 +2,78 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Web Studio</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#111823">
+<meta name="theme-color" content="#07090d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Web Studio">
+<meta name="format-detection" content="telephone=no">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header><img class="brand" src="icons/mark.png" alt=""><div class="hd"><b id="title">Web Studio</b><span id="st"></span></div><button class="ib" id="bSet" data-ic="gear"></button></header>
+<div id="probe"></div>
 <main>
+  <!-- المشاريع -->
   <section id="v-projects" class="v on">
-    <div class="hcard"><img src="icons/logo.png" alt="HUMAM IT"><div><b>Web Studio</b><small data-i="tag"></small></div></div>
-    <h2 class="sec" data-i="projects"></h2>
-    <div class="bar"><button class="pri" id="bNew"><span data-ic="plus"></span><span data-i="newProject"></span></button><button id="bImp"><span data-ic="upload"></span><span data-i="import"></span></button><input type="file" id="fImp" accept=".zip,application/zip" hidden></div>
-    <div id="plist"></div>
+    <header class="nb">
+      <div class="nb-row"><img class="brand" src="icons/mark.png" alt=""><div class="bt"><b>Web Studio</b><small data-i="tag"></small></div><button class="ib" id="bImp" data-ic="upload"></button><button class="ib" id="bSet" data-ic="gear"></button></div>
+      <h1><span data-i="projects"></span><em id="pcount"></em></h1>
+    </header>
+    <div class="scroll">
+      <button class="big" id="bNew"><span data-ic="plus"></span><span data-i="newProject"></span></button>
+      <div id="plist"></div>
+    </div>
+    <input type="file" id="fImp" accept=".zip,application/zip" hidden>
   </section>
+
+  <!-- المحرر -->
   <section id="v-editor" class="v">
+    <header class="nb">
+      <div class="nb-row"><button class="ib" id="bFiles" data-ic="folder"></button><div class="hd"><b id="etitle">Web Studio</b><span id="st"></span></div><button class="ib" id="bUndo" data-ic="undo"></button><button class="ib" id="bRedo" data-ic="redo"></button><button class="ib" id="bMore" data-ic="dots"></button></div>
+    </header>
     <div id="tabs"></div>
-    <div id="etb"><button class="ib" id="bUndo" data-ic="undo"></button><button class="ib" id="bRedo" data-ic="redo"></button><span class="sp"></span><button class="ib" id="bFm">A−</button><button class="ib" id="bFp">A+</button><button class="pri sm" id="bSave"><span data-ic="download"></span><span data-i="save"></span></button></div>
     <div class="ed"><pre id="ln"></pre><div class="cw"><pre id="hl"></pre><textarea id="ta" wrap="off" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off"></textarea></div><div id="empty" data-i="noFile"></div></div>
     <div id="keys"></div>
   </section>
+
+  <!-- المعاينة: شاشة كاملة بلا أشرطة -->
   <section id="v-preview" class="v">
-    <div class="addr"><button class="ib" id="bBack" data-ic="code"></button><span id="addr"></span><button class="ib" id="bFit" data-ic="monitor"></button><button class="ib" id="bReload" data-ic="refresh"></button></div>
-    <div id="fw"></div>
-    <div id="con" hidden><div id="cl"></div><div class="ci"><input id="ce" placeholder="JS ›" autocapitalize="off" autocorrect="off" spellcheck="false"><button id="bClr" data-i="clear"></button></div></div>
+    <div id="fw"><div id="fwi"></div></div>
+    <div id="errbar"></div>
+    <div id="dock" class="r idle">
+      <div class="dk-acts" id="dkActs">
+        <button data-k="back" data-ic="code"></button>
+        <button data-k="reload" data-ic="refresh"></button>
+        <button data-k="dev" id="dkDev"></button>
+        <button data-k="con" data-ic="term"></button>
+      </div>
+      <button id="dkFab"><img src="icons/mark.png" alt=""><em id="dkBadge" hidden></em></button>
+    </div>
+    <div id="con">
+      <i class="grab"></i>
+      <div class="ch"><b><span data-i="console"></span><em id="cbadge" hidden></em></b><span><button class="ib" id="bClr" data-i="clear"></button><button class="ib" id="bCx" data-ic="x"></button></span></div>
+      <div id="cl"></div>
+      <div class="ci"><input id="ce" placeholder="JS ›" autocapitalize="off" autocorrect="off" spellcheck="false"></div>
+    </div>
   </section>
+
   <div id="scrim"></div>
   <aside id="drawer"><div class="dh"><b data-i="files"></b><span><button class="ib" id="bAF"><span data-ic="plus"></span><span data-ic="file"></span></button><button class="ib" id="bAD"><span data-ic="plus"></span><span data-ic="folder"></span></button><button class="ib" id="bUp" data-ic="upload"></button></span></div><div id="tree"></div><input type="file" id="fUp" hidden multiple></aside>
 </main>
+
 <nav>
   <button data-n="projects"><span class="ni" data-ic="grid"></span><span data-i="projects"></span></button>
-  <button data-n="files"><span class="ni" data-ic="list"></span><span data-i="files"></span></button>
   <button data-n="run" id="nRun"><span class="ni" data-ic="play"></span><span data-i="run"></span></button>
   <button data-n="code"><span class="ni" data-ic="code"></span><span data-i="code"></span></button>
-  <button data-n="console"><span class="ni" data-ic="term"></span><span data-i="console"></span><em id="badge" hidden></em></button>
 </nav>
+
 <div id="sheet" hidden><div class="panel" id="panel"></div></div>
+<div id="dlg" hidden><div class="dbox"><h3 id="dT"></h3><input id="dI" autocapitalize="off" autocorrect="off" spellcheck="false"><div class="dbt"><button id="dNo"></button><button id="dOk" class="pri"></button></div></div></div>
 <div id="toast"></div>
 <div id="splash"><img src="icons/logo.png" alt="HUMAM IT"><b>Web Studio</b></div>
 <script src="app.js"></script>
